@@ -1,0 +1,96 @@
+{
+	"info": {
+		"_postman_id": "6eca7463-b105-451d-a678-e7f66836eeb6",
+		"name": "FleetMasterTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Trucks",
+			"item": [
+				{
+					"name": "GetTruck",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/3",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SemiTrailer",
+			"item": [
+				{
+					"name": "GetSemiTrailer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trailers/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trailers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSemiTrailerNotExist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trailers/111",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trailers",
+								"111"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Drivers",
+			"item": [
+				{
+					"name": "GetDriver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
