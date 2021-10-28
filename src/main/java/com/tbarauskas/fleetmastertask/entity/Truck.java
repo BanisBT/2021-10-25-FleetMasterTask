@@ -43,4 +43,12 @@ public class Truck {
     @UpdateTimestamp
     @Column(name = "updated")
     private LocalDateTime updated;
+
+    public boolean isAvailableForDriver() {
+        return drivers.size() < 2;
+    }
+
+    public boolean isAvailableForTrailer() {
+        return semiTrailer == null;
+    }
 }

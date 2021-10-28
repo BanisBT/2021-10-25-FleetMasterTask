@@ -1,8 +1,11 @@
 package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Driver;
+import com.tbarauskas.fleetmastertask.entity.Truck;
+import com.tbarauskas.fleetmastertask.exception.DriverIsAlreadyAssignedToTruckException;
 import com.tbarauskas.fleetmastertask.exception.DriversLicenseNumberAlreadyExistException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
+import com.tbarauskas.fleetmastertask.exception.TrucksAllSeatsAreTakenException;
 import com.tbarauskas.fleetmastertask.repository.DriverRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +16,11 @@ public class DriverService {
 
     private final DriverRepository driverRepository;
 
-    public DriverService(DriverRepository driverRepository) {
+    private final TruckService truckService;
+
+    public DriverService(DriverRepository driverRepository, TruckService truckService) {
         this.driverRepository = driverRepository;
+        this.truckService = truckService;
     }
 
     public Driver getDriverById(Long id) {
@@ -39,6 +45,23 @@ public class DriverService {
         } else {
             driverFromDb.setDriverLicense(driver.getDriverLicense());
             return createDriver(driverFromDb);
+        }
+    }
+
+    public Driver setDriverToTruck(Long driverId, String truckNumber) {
+        Truck truck = truckService.getTruckByRegistrationNumber(truckNumber);
+        Driver driver = getDriverById(driverId);
+
+        if (truck.isAvailableForDriver()) {
+            if (truck.equals(driver.getTruck())) {
+                throw new DriverIsAlreadyAssignedToTruckException();
+            } else {
+                driver.setTruck(truck);
+                driverRepository.save(driver);
+                return driver;
+            }
+        } else {
+            throw new TrucksAllSeatsAreTakenException(truckNumber);
         }
     }
 

@@ -19,6 +19,26 @@ public class GlobalExceptionHandler {
                 String.format("Resource with id - %d not found", e.getId())), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(NoTruckByNumberFoundException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(NoTruckByNumberFoundException e) {
+        return new ResponseEntity<>(new ErrorHandler(HttpStatus.NOT_FOUND.value(),
+                String.format("No truck found by given number - %s", e.getTruckNumber())), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DriverIsAlreadyAssignedToTruckException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(DriverIsAlreadyAssignedToTruckException e) {
+        return new ResponseEntity<>(new ErrorHandler(HttpStatus.BAD_REQUEST.value(),
+                "Driver already assigned to this truck"), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TrucksAllSeatsAreTakenException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(TrucksAllSeatsAreTakenException e) {
+        log.debug("Trucks with registration number {} all seats are taken", e.getTruckNumber());
+        return new ResponseEntity<>(new ErrorHandler(HttpStatus.BAD_REQUEST.value(),
+                String.format("Trucks with registration number - %s all seats are taken", e.getTruckNumber())),
+                HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(DriversLicenseNumberAlreadyExistException.class)
     public ResponseEntity<ErrorHandler> exceptionHandler(DriversLicenseNumberAlreadyExistException e) {
         log.debug("Driver license - {} already exist in data base", e.getDriverLicense());

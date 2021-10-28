@@ -1,9 +1,11 @@
 package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Driver;
+import com.tbarauskas.fleetmastertask.entity.Truck;
 import com.tbarauskas.fleetmastertask.exception.DriversLicenseNumberAlreadyExistException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.repository.DriverRepository;
+import com.tbarauskas.fleetmastertask.repository.TruckRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +25,15 @@ class DriverServiceTest {
 
     @Mock
     private DriverRepository driverRepository;
+
+    @Mock
+    private Truck truck;
+
+    @Mock
+    private TruckRepository truckRepository;
+
+    @Mock
+    private TruckService truckService;
 
     @InjectMocks
     private DriverService driverService;

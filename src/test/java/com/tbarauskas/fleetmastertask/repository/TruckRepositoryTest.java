@@ -24,4 +24,13 @@ class TruckRepositoryTest {
         assertEquals(1L, truck.getId());
         assertEquals("Volvo", truck.getManufacturer());
     }
+
+    @Test
+    void testGetTruckByRegistrationNumber() {
+        Truck truck = truckRepository.getTruckByRegistrationNumber("BBB 888").orElse(null);
+
+        assert truck != null;
+        assertEquals(2L, truck.getId());
+        assertEquals("Mercedes", truck.getManufacturer());
+    }
 }

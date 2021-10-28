@@ -1,6 +1,7 @@
 package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Truck;
+import com.tbarauskas.fleetmastertask.exception.NoTruckByNumberFoundException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.repository.TruckRepository;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,10 @@ public class TruckService {
 
     public Truck getTruckById(Long id) {
         return truckRepository.getTruckById(id).orElseThrow(() -> new ResourceNotFoundException(id));
+    }
+
+    public Truck getTruckByRegistrationNumber(String number) {
+        return truckRepository.getTruckByRegistrationNumber(number)
+                .orElseThrow(() -> new NoTruckByNumberFoundException(number));
     }
 }

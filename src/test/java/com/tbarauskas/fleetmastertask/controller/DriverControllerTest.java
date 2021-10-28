@@ -1,6 +1,5 @@
 package com.tbarauskas.fleetmastertask.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tbarauskas.fleetmastertask.DTO.driver.DriverRequestDTO;
 import com.tbarauskas.fleetmastertask.DTO.driver.DriverResponseDTO;
@@ -236,5 +235,56 @@ class DriverControllerTest {
         assertEquals(HttpStatus.NOT_FOUND.value(), error.getStatus());
         assertEquals("Resource with id - 111 not found", error.getMessage());
         assertEquals(drivers.size(), (driversAfter.size()));
+    }
+
+    @Test
+    void testSetDriverToTruck() throws Exception {
+        MvcResult result = mockMvc.perform(patch("/drivers/{id}/setTruck", 3L)
+                .param("truckRegisterNumber", "BBB 888"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        DriverResponseDTO driver = objectMapper.readValue(result.getResponse().getContentAsString(), DriverResponseDTO.class);
+
+        assertEquals("BBB 888", driver.getTruck().getRegistrationNumber());
+    }
+
+    @Test
+    void testSetDriverToTruckIfTruckFullOfDrivers() throws Exception {
+        MvcResult result = mockMvc.perform(patch("/drivers/{id}/setTruck", 3L)
+                        .param("truckRegisterNumber", "CCC 888"))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        ErrorHandler error = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorHandler.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), error.getStatus());
+        assertEquals("Trucks with registration number - CCC 888 all seats are taken", error.getMessage());
+    }
+
+    @Test
+    void testSetDriverToTruckNoTruckByNumber() throws Exception {
+        MvcResult result = mockMvc.perform(patch("/drivers/{id}/setTruck", 3L)
+                        .param("truckRegisterNumber", "NoNumberXXX"))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        ErrorHandler error = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorHandler.class);
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), error.getStatus());
+        assertEquals("No truck found by given number - NoNumberXXX", error.getMessage());
+    }
+
+    @Test
+    void testSetDriverToTruckIfAlreadySetToThatTruck() throws Exception {
+        MvcResult result = mockMvc.perform(patch("/drivers/{id}/setTruck", 5L)
+                        .param("truckRegisterNumber", "TruckWithDriver5"))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        ErrorHandler error = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorHandler.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), error.getStatus());
+        assertEquals("Driver already assigned to this truck", error.getMessage());
     }
 }

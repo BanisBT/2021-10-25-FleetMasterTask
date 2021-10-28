@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface TruckRepository extends JpaRepository<Truck, Long> {
 
     Optional<Truck> getTruckById(Long id);
+
+    Optional<Truck> getTruckByRegistrationNumber(String number);
 }

@@ -109,6 +109,106 @@
 					"response": []
 				},
 				{
+					"name": "PatchDriverToTruckNoTruckByNumber",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/2/setTruck?truckRegisterNumber=XXX 000",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2",
+								"setTruck"
+							],
+							"query": [
+								{
+									"key": "truckRegisterNumber",
+									"value": "XXX 000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PatchDriverToTruckIsAlreadyAssigned",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/2/setTruck?truckRegisterNumber=BBB 888",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2",
+								"setTruck"
+							],
+							"query": [
+								{
+									"key": "truckRegisterNumber",
+									"value": "BBB 888"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PatchDriverToTruck",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/4/setTruck?truckRegisterNumber=BBB 888",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"4",
+								"setTruck"
+							],
+							"query": [
+								{
+									"key": "truckRegisterNumber",
+									"value": "BBB 888"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PatchDriverToTruckIfTruckFull",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/4/setTruck?truckRegisterNumber=CCC 888",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"4",
+								"setTruck"
+							],
+							"query": [
+								{
+									"key": "truckRegisterNumber",
+									"value": "CCC 888"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "PutDriverUpdateSameLicense",
 					"request": {
 						"method": "PUT",
@@ -143,7 +243,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN0002\"\n}",
+							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN0004\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,7 +271,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN0002\"\n}",
+							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN000234435\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -394,6 +494,44 @@
 							"path": [
 								"drivers",
 								"999"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteDriverNotExist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/999/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"999",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteDriver",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/2/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2",
+								"delete"
 							]
 						}
 					},
