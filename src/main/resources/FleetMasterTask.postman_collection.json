@@ -25,6 +25,24 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetTruck NotExist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/999",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"999"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -85,6 +103,213 @@
 							"path": [
 								"drivers",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreate",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Created\",\n    \"surname\": \"Surname\",\n    \"driverLicense\": \"TEST123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreateNotValidNameBlank",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \" \",\n    \"surname\": \"Surname\",\n    \"driverLicense\": \"TEST123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreateNotValidDriverLicense",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jonas\",\n    \"surname\": \"Surname\",\n    \"driverLicense\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreateNotValidSurnameBlank",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jonas\",\n    \"surname\": \" \",\n    \"driverLicense\": \"TEST123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreateNotValidNameNotOnlyLetters",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Created34\",\n    \"surname\": \"Surname\",\n    \"driverLicense\": \"TEST123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreateNotValidNameMoreThen50Symbols",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Createdkqrsdufhsdfsdgfsdigfaiugfosdgfsalugfausigfnlakfkabskdfjbsjd\",\n    \"surname\": \"Surname\",\n    \"driverLicense\": \"TEST123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostDriverCreateIfDriverLicenseExist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Created\",\n    \"surname\": \"Surname\",\n    \"driverLicense\": \"TEST123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDriverNotExist",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/drivers/999",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"999"
 							]
 						}
 					},

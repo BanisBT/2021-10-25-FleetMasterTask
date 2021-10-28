@@ -1,7 +1,7 @@
 package com.tbarauskas.fleetmastertask.controller;
 
-import com.tbarauskas.fleetmastertask.DTO.DriverRequestDTO;
-import com.tbarauskas.fleetmastertask.DTO.DriverResponseDTO;
+import com.tbarauskas.fleetmastertask.DTO.driver.DriverRequestDTO;
+import com.tbarauskas.fleetmastertask.DTO.driver.DriverResponseDTO;
 import com.tbarauskas.fleetmastertask.entity.Driver;
 import com.tbarauskas.fleetmastertask.service.DriverService;
 import lombok.extern.slf4j.Slf4j;

@@ -2,8 +2,10 @@ package com.tbarauskas.fleetmastertask.exception;
 
 import com.tbarauskas.fleetmastertask.model.ErrorHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,6 +17,22 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorHandler> exceptionHandler(ResourceNotFoundException e) {
         return new ResponseEntity<>(new ErrorHandler(HttpStatus.NOT_FOUND.value(),
                 String.format("Resource with id - %d not found", e.getId())), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DriversLicenseNumberAlreadyExistException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(DriversLicenseNumberAlreadyExistException e) {
+        log.debug("Driver license - {} already exist in data base", e.getDriverLicense());
+        return new ResponseEntity<>(new ErrorHandler(HttpStatus.BAD_REQUEST.value(),
+                String.format("Driver license - %s already is taken", e.getDriverLicense())),
+                HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(MethodArgumentNotValidException e) {
+        return new ResponseEntity<>(new ErrorHandler(HttpStatus.BAD_REQUEST.value(),
+                e.getBindingResult().getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage)
+                        .collect(java.util.stream.Collectors.joining(",  "))),
+                HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,5 +1,6 @@
-package com.tbarauskas.fleetmastertask.DTO;
+package com.tbarauskas.fleetmastertask.DTO.driver;
 
+import com.tbarauskas.fleetmastertask.DTO.TruckResponseDTO;
 import lombok.Data;
 
 @Data

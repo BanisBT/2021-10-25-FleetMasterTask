@@ -1,6 +1,7 @@
 package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Driver;
+import com.tbarauskas.fleetmastertask.exception.DriversLicenseNumberAlreadyExistException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.repository.DriverRepository;
 import org.junit.jupiter.api.Test;
@@ -40,5 +41,23 @@ class DriverServiceTest {
         when(driverRepository.getDriverById(anyLong())).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class, () -> driverService.getDriverById(999L));
+    }
+
+    @Test
+    void testCreateDriver() {
+        when(driverRepository.getDriverByDriverLicenseIgnoreCase(driver.getDriverLicense())).thenReturn(Optional.empty());
+
+        driverService.createDriver(driver);
+
+        verify(driverRepository, times(1)).save(driver);
+    }
+
+    @Test
+    void testCreateDriverIfDriverLicenseExist() {
+        when(driverRepository.getDriverByDriverLicenseIgnoreCase(driver.getDriverLicense())).thenReturn(Optional.of(driver));
+
+       assertThrows(DriversLicenseNumberAlreadyExistException.class, () -> driverService.createDriver(driver));
+
+        verify(driverRepository, never()).save(any(Driver.class));
     }
 }

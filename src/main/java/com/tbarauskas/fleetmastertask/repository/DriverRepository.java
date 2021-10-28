@@ -11,5 +11,5 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
 
     Optional<Driver> getDriverById(Long id);
 
-    Optional<Driver> getDriverByDriverLicense(String driverLicense);
+    Optional<Driver> getDriverByDriverLicenseIgnoreCase(String driverLicense);
 }

@@ -23,4 +23,23 @@ class DriverRepositoryTest {
         assertEquals(2L, driver.getId());
         assertEquals("Two", driver.getSurname());
     }
+
+    @Test
+    void testGetDriverByDriverLicenseIgnoreCase() {
+        Driver driver = driverRepository.getDriverByDriverLicenseIgnoreCase("LCN0004").orElse(null);
+
+        assert driver != null;
+        assertEquals(4, driver.getId());
+        assertEquals("LCN0004", driver.getDriverLicense());
+    }
+
+    @Test
+    void testGetDriverByDriverLicenseIgnoreCaseIfCaseNotCapital() {
+        Driver driver = driverRepository.getDriverByDriverLicenseIgnoreCase("lcn0004").orElse(null);
+
+        assert driver != null;
+        assertEquals(4, driver.getId());
+        assertEquals("LCN0004", driver.getDriverLicense());
+        assertNotEquals("lcn0004", driver.getDriverLicense());
+    }
 }

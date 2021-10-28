@@ -6,6 +6,8 @@ import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.repository.DriverRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class DriverService {
 
@@ -20,8 +22,10 @@ public class DriverService {
     }
 
     public Driver createDriver(Driver driver) {
-        driverRepository.getDriverByDriverLicense(driver.getDriverLicense())
-                .orElseThrow(() -> new DriversLicenseNumberAlreadyExistException(driver.getDriverLicense()));
-        return driverRepository.save(driver);
+        if (driverRepository.getDriverByDriverLicenseIgnoreCase(driver.getDriverLicense()).equals(Optional.empty())) {
+            return driverRepository.save(driver);
+        } else {
+            throw new DriversLicenseNumberAlreadyExistException(driver.getDriverLicense());
+        }
     }
 }
