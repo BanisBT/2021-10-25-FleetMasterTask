@@ -28,4 +28,17 @@ public class DriverService {
             throw new DriversLicenseNumberAlreadyExistException(driver.getDriverLicense());
         }
     }
+
+    public Driver updateDriver(Long id, Driver driver) {
+        Driver driverFromDb = getDriverById(id);
+        driverFromDb.setName(driver.getName());
+        driverFromDb.setSurname(driver.getSurname());
+
+        if (driverFromDb.getDriverLicense().equalsIgnoreCase(driver.getDriverLicense())) {
+            return driverRepository.save(driverFromDb);
+        } else {
+            driverFromDb.setDriverLicense(driver.getDriverLicense());
+            return createDriver(driverFromDb);
+        }
+    }
 }

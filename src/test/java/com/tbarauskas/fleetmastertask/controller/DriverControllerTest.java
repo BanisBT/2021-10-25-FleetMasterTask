@@ -1,5 +1,6 @@
 package com.tbarauskas.fleetmastertask.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tbarauskas.fleetmastertask.DTO.driver.DriverRequestDTO;
 import com.tbarauskas.fleetmastertask.DTO.driver.DriverResponseDTO;
@@ -15,9 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -158,5 +158,51 @@ class DriverControllerTest {
 
         assertEquals(HttpStatus.BAD_REQUEST.value(), error.getStatus());
         assertEquals("Driver license symbols must be in range from 6 to 35", error.getMessage());
+    }
+
+    @Test
+    void testUpdateDriver() throws Exception {
+        DriverRequestDTO driverRequest = new DriverRequestDTO("Update", "UpdateSurname", "LCN0001");
+
+        MvcResult result = mockMvc.perform(put("/drivers/{id}/update", 1L)
+                        .content(objectMapper.writeValueAsString(driverRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        DriverResponseDTO driverResponse = objectMapper.readValue(result.getResponse().getContentAsString(),
+                DriverResponseDTO.class);
+
+        Driver driver = driverRepository.getDriverById(1L).orElse(null);
+
+        assert driver != null;
+        assertEquals("Update", driver.getName());
+        assertEquals("Update", driverResponse.getName());
+        assertEquals("UpdateSurname", driver.getSurname());
+        assertEquals("UpdateSurname", driverResponse.getSurname());
+        assertEquals("LCN0001", driver.getDriverLicense());
+        assertEquals("LCN0001", driverResponse.getDriverLicense());
+    }
+
+    @Test
+    void testUpdateDriverLicenseExist() throws Exception {
+        DriverRequestDTO driverRequest = new DriverRequestDTO("NotUpdate", "NotUpdateSurname",
+                "LCN0003");
+
+        MvcResult result = mockMvc.perform(put("/drivers/{id}/update", 1L)
+                        .content(objectMapper.writeValueAsString(driverRequest))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+
+        ErrorHandler error = objectMapper.readValue(result.getResponse().getContentAsString(),
+                ErrorHandler.class);
+        Driver driver = driverRepository.getDriverById(1L).orElse(null);
+
+        assertEquals(HttpStatus.BAD_REQUEST.value(), error.getStatus());
+        assertEquals("Driver license - LCN0003 already is taken", error.getMessage());
+        assert driver != null;
+        assertNotEquals("NotUpdate", driver.getName());
+        assertNotEquals("NotUpdateSurname", driver.getSurname());
     }
 }

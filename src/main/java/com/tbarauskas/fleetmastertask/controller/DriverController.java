@@ -38,4 +38,12 @@ public class DriverController {
         log.debug("Driver - {} has been created", driverCreate);
         return modelMapper.map(driverCreate, DriverResponseDTO.class);
     }
+
+    @PutMapping("/{id}/update")
+    @ResponseStatus(HttpStatus.OK)
+    public DriverResponseDTO updateDriver(@PathVariable Long id, @RequestBody DriverRequestDTO driverRequest) {
+        Driver driver = driverService.updateDriver(id, modelMapper.map(driverRequest, Driver.class));
+        log.debug("Driver - {} has been updated", driver);
+        return modelMapper.map(driver, DriverResponseDTO.class);
+    }
 }
