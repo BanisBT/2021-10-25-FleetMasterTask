@@ -41,9 +41,16 @@ public class DriverController {
 
     @PutMapping("/{id}/update")
     @ResponseStatus(HttpStatus.OK)
-    public DriverResponseDTO updateDriver(@PathVariable Long id, @RequestBody DriverRequestDTO driverRequest) {
+    public DriverResponseDTO updateDriver(@PathVariable Long id, @Valid @RequestBody DriverRequestDTO driverRequest) {
         Driver driver = driverService.updateDriver(id, modelMapper.map(driverRequest, Driver.class));
         log.debug("Driver - {} has been updated", driver);
         return modelMapper.map(driver, DriverResponseDTO.class);
+    }
+
+    @DeleteMapping("{id}/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteDriver(@PathVariable Long id) {
+        driverService.deleteDriver(id);
+        log.debug("Driver with id - {} has been deleted", id);
     }
 }

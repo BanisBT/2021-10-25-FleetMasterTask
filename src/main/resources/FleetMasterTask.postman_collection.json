@@ -109,6 +109,90 @@
 					"response": []
 				},
 				{
+					"name": "PutDriverUpdateSameLicense",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN0002\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/2/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutDriverUpdateExistedLicense",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN0002\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/2/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PutDriverUpdateNewLicense",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated\",\n    \"surname\": \"UpdatedSurname\",\n    \"driverLicense\": \"LCN0002\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/drivers/2/update",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"drivers",
+								"2",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "PostDriverCreate",
 					"request": {
 						"method": "POST",

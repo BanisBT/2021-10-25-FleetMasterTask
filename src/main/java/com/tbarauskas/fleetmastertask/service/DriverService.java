@@ -41,4 +41,8 @@ public class DriverService {
             return createDriver(driverFromDb);
         }
     }
+
+    public void deleteDriver(Long id) {
+        driverRepository.delete(getDriverById(id));
+    }
 }

@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -56,8 +56,27 @@ class DriverServiceTest {
     void testCreateDriverIfDriverLicenseExist() {
         when(driverRepository.getDriverByDriverLicenseIgnoreCase(driver.getDriverLicense())).thenReturn(Optional.of(driver));
 
-       assertThrows(DriversLicenseNumberAlreadyExistException.class, () -> driverService.createDriver(driver));
+        assertThrows(DriversLicenseNumberAlreadyExistException.class, () -> driverService.createDriver(driver));
 
         verify(driverRepository, never()).save(any(Driver.class));
+    }
+
+    @Test
+    void testDeleteDriver() {
+        when(driverRepository.getDriverById(driver.getId())).thenReturn(Optional.of(driver));
+
+        driverService.deleteDriver(driver.getId());
+
+        verify(driverRepository, times(1)).getDriverById(driver.getId());
+        verify(driverRepository, times(1)).delete(driver);
+    }
+
+    @Test
+    void testDeleteDriverIfNotExist() {
+        when(driverRepository.getDriverById(333L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class, () -> driverService.deleteDriver(333L));
+
+        verify(driverRepository, never()).delete(any(Driver.class));
     }
 }

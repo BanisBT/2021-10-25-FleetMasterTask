@@ -16,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -204,5 +206,35 @@ class DriverControllerTest {
         assert driver != null;
         assertNotEquals("NotUpdate", driver.getName());
         assertNotEquals("NotUpdateSurname", driver.getSurname());
+    }
+
+    @Test
+    void testDeleteDriver() throws Exception {
+        List<Driver> drivers = driverRepository.findAll();
+
+        mockMvc.perform(delete("/drivers/{id}/delete", 1L))
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        List<Driver> driversAfter = driverRepository.findAll();
+
+        assertTrue(driverRepository.getDriverById(1L).isEmpty());
+        assertEquals(drivers.size(), (driversAfter.size() + 1));
+    }
+
+    @Test
+    void testDeleteDriverNotExist() throws Exception {
+        List<Driver> drivers = driverRepository.findAll();
+
+        MvcResult result = mockMvc.perform(delete("/drivers/{id}/delete", 111L))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        ErrorHandler error = objectMapper.readValue(result.getResponse().getContentAsString(), ErrorHandler.class);
+        List<Driver> driversAfter = driverRepository.findAll();
+
+        assertEquals(HttpStatus.NOT_FOUND.value(), error.getStatus());
+        assertEquals("Resource with id - 111 not found", error.getMessage());
+        assertEquals(drivers.size(), (driversAfter.size()));
     }
 }
