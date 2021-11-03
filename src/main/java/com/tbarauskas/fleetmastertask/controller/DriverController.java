@@ -4,10 +4,7 @@ import com.tbarauskas.fleetmastertask.DTO.driver.DriverRequestDTO;
 import com.tbarauskas.fleetmastertask.DTO.driver.DriverResponseDTO;
 import com.tbarauskas.fleetmastertask.entity.Driver;
 import com.tbarauskas.fleetmastertask.service.DriverService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -41,6 +38,14 @@ public class DriverController {
         return modelMapper.map(driverService.getDriverById(id), DriverResponseDTO.class);
     }
 
+    @ApiOperation(value = "Create driver", tags = "createCar", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successfully created driver record"),
+            @ApiResponse(code = 400, message = "Validation failed"),
+            @ApiResponse(code = 400, message = "Driver license number already exist in DataBase"),
+            @ApiResponse(code = 404, message = "Driver not found"),
+
+    })
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public DriverResponseDTO createDriver(@Valid @RequestBody DriverRequestDTO driverDTO) {
@@ -49,6 +54,14 @@ public class DriverController {
         return modelMapper.map(driverCreate, DriverResponseDTO.class);
     }
 
+    @ApiOperation(value = "Update driver", tags = "createCar", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successfully updated driver record"),
+            @ApiResponse(code = 400, message = "Validation failed"),
+            @ApiResponse(code = 400, message = "Driver license number already exist in DataBase"),
+            @ApiResponse(code = 404, message = "Driver not found"),
+
+    })
     @PutMapping("/{id}/update")
     @ResponseStatus(HttpStatus.OK)
     public DriverResponseDTO updateDriver(@PathVariable Long id, @Valid @RequestBody DriverRequestDTO driverRequest) {
@@ -57,9 +70,18 @@ public class DriverController {
         return modelMapper.map(driver, DriverResponseDTO.class);
     }
 
+    @ApiOperation(value = "Create driver", tags = "createCar", httpMethod = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successfully set truck to driver"),
+            @ApiResponse(code = 400, message = "Truck has max number of drivers"),
+            @ApiResponse(code = 400, message = "Truck already assigned to this driver"),
+            @ApiResponse(code = 404, message = "Truck not found"),
+
+    })
     @PatchMapping("{id}/setTruck")
-    public DriverResponseDTO setDriverToTruck(@PathVariable Long id,
-                                              @RequestParam(name = "truckRegisterNumber") String number) {
+    public DriverResponseDTO setDriverToTruck(@ApiParam(value = "Truck's registration number to which driver will be assigned",
+            example = "LTU 888")
+                                              @PathVariable Long id, @RequestParam(name = "truckRegisterNumber") String number) {
         Driver driver = driverService.setDriverToTruck(id, number);
         log.debug(String.format("To truck with registration number - %s was assigned driver with id - %d", number, id));
         return modelMapper.map(driver, DriverResponseDTO.class);

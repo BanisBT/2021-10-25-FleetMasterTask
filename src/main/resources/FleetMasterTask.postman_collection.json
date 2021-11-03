@@ -27,6 +27,146 @@
 					"response": []
 				},
 				{
+					"name": "DeleteTruck",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/3/delete",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"3",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateTruck",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"manufacturer\": \"Mercedes\",\n    \"productionDate\": \" \",\n    \"registrationNumber\": \"BBB 999rt\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/trucks/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTrucks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/list",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTrucksParamNoTrailer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/list?driver=ANY",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"list"
+							],
+							"query": [
+								{
+									"key": "driver",
+									"value": "ANY"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTrucksParamNoDriver",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/list?trailer=ANY",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"list"
+							],
+							"query": [
+								{
+									"key": "trailer",
+									"value": "ANY"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTrucksParamDriverOneOrMoreAndTrailer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/trucks/list?driver=ONE&trailer=ONE",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"trucks",
+								"list"
+							],
+							"query": [
+								{
+									"key": "driver",
+									"value": "ONE"
+								},
+								{
+									"key": "trailer",
+									"value": "ONE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "GetTruck NotExist",
 					"request": {
 						"method": "GET",
