@@ -2,8 +2,8 @@ package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Driver;
 import com.tbarauskas.fleetmastertask.entity.Truck;
-import com.tbarauskas.fleetmastertask.exception.DriverIsAlreadyAssignedToTruckException;
-import com.tbarauskas.fleetmastertask.exception.DriversLicenseNumberAlreadyExistException;
+import com.tbarauskas.fleetmastertask.exception.DriverIsAlreadyAssignedToThisTruckException;
+import com.tbarauskas.fleetmastertask.exception.LicenseNumberAlreadyExistException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.exception.TrucksAllSeatsAreTakenException;
 import com.tbarauskas.fleetmastertask.repository.DriverRepository;
@@ -31,7 +31,7 @@ public class DriverService {
         if (driverRepository.getDriverByDriverLicenseIgnoreCase(driver.getDriverLicense()).equals(Optional.empty())) {
             return driverRepository.save(driver);
         } else {
-            throw new DriversLicenseNumberAlreadyExistException(driver.getDriverLicense());
+            throw new LicenseNumberAlreadyExistException(driver.getDriverLicense());
         }
     }
 
@@ -52,13 +52,12 @@ public class DriverService {
         Truck truck = truckService.getTruckByRegistrationNumber(truckNumber);
         Driver driver = getDriverById(driverId);
 
-        if (truck.isAvailableForDriver()) {
+        if (truck.getDriversListSize() < 2) {
             if (truck.equals(driver.getTruck())) {
-                throw new DriverIsAlreadyAssignedToTruckException();
+                throw new DriverIsAlreadyAssignedToThisTruckException();
             } else {
                 driver.setTruck(truck);
-                driverRepository.save(driver);
-                return driver;
+                return driverRepository.save(driver);
             }
         } else {
             throw new TrucksAllSeatsAreTakenException(truckNumber);

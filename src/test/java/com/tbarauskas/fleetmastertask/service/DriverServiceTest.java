@@ -2,7 +2,7 @@ package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Driver;
 import com.tbarauskas.fleetmastertask.entity.Truck;
-import com.tbarauskas.fleetmastertask.exception.DriversLicenseNumberAlreadyExistException;
+import com.tbarauskas.fleetmastertask.exception.LicenseNumberAlreadyExistException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.repository.DriverRepository;
 import com.tbarauskas.fleetmastertask.repository.TruckRepository;
@@ -67,7 +67,7 @@ class DriverServiceTest {
     void testCreateDriverIfDriverLicenseExist() {
         when(driverRepository.getDriverByDriverLicenseIgnoreCase(driver.getDriverLicense())).thenReturn(Optional.of(driver));
 
-        assertThrows(DriversLicenseNumberAlreadyExistException.class, () -> driverService.createDriver(driver));
+        assertThrows(LicenseNumberAlreadyExistException.class, () -> driverService.createDriver(driver));
 
         verify(driverRepository, never()).save(any(Driver.class));
     }

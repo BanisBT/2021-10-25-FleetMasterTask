@@ -44,11 +44,14 @@ INSERT INTO truck(semi_trailer_id, manufacturer, production_date, registration_n
 VALUES (1, 'Volvo', '2002-01-01', 'CCC 888'),
        (2, 'Mercedes', '2006-10-01', 'BBB 888'),
        (3, 'Mercedes', '2006-10-01', 'BBB 999'),
-       (4, 'Truck', '2000-03-01', 'TruckWithDriver5');
+       (4, 'Truck', '2000-03-01', 'TruckWithDriver5'),
+       (null, 'Truck', '2000-03-01', 'JustDriver'),
+       (null, 'Truck', '2000-03-01', 'NoTrailerAndDriver');
 
 INSERT INTO driver(truck_id, name, surname, driver_license)
 VALUES (1, 'Driver', 'One', 'LCN0001'),
        (2, 'Driver', 'Two', 'LCN0002'),
        (3, 'Driver', 'Three', 'LCN0003'),
        (1, 'Driver', 'Four', 'LCN0004'),
-       (4, 'Driver', 'OnTruck4', 'LCN0005');
+       (4, 'Driver', 'OnTruck4', 'LCN0005'),
+       (5, 'Driver', 'OnTruck5', 'LCN0006');

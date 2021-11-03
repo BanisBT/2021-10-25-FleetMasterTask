@@ -1,7 +1,7 @@
 package com.tbarauskas.fleetmastertask.service;
 
 import com.tbarauskas.fleetmastertask.entity.Truck;
-import com.tbarauskas.fleetmastertask.exception.NoTruckByNumberFoundException;
+import com.tbarauskas.fleetmastertask.exception.NoVehicleByNumberFoundException;
 import com.tbarauskas.fleetmastertask.exception.ResourceNotFoundException;
 import com.tbarauskas.fleetmastertask.repository.TruckRepository;
 import org.junit.jupiter.api.Test;
@@ -56,6 +56,6 @@ class TruckServiceTest {
     void testGetTruckByRegistrationNumberNotExist() {
         when(truckRepository.getTruckByRegistrationNumber(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(NoTruckByNumberFoundException.class, () -> truckService.getTruckByRegistrationNumber("NotExist67"));
+        assertThrows(NoVehicleByNumberFoundException.class, () -> truckService.getTruckByRegistrationNumber("NotExist67"));
     }
 }

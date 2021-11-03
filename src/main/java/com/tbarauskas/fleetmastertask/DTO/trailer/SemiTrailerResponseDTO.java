@@ -1,12 +1,13 @@
-package com.tbarauskas.fleetmastertask.DTO;
+package com.tbarauskas.fleetmastertask.DTO.trailer;
 
-import com.tbarauskas.fleetmastertask.entity.SemiTrailer;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
-public class TruckResponseDTO {
+@NoArgsConstructor
+public class SemiTrailerResponseDTO {
 
     private Long id;
 
@@ -15,6 +16,4 @@ public class TruckResponseDTO {
     private LocalDate productionDate;
 
     private String registrationNumber;
-
-    private SemiTrailer semiTrailer;
 }

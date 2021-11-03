@@ -19,14 +19,14 @@ public class GlobalExceptionHandler {
                 String.format("Resource with id - %d not found", e.getId())), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(NoTruckByNumberFoundException.class)
-    public ResponseEntity<ErrorHandler> exceptionHandler(NoTruckByNumberFoundException e) {
+    @ExceptionHandler(NoVehicleByNumberFoundException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(NoVehicleByNumberFoundException e) {
         return new ResponseEntity<>(new ErrorHandler(HttpStatus.NOT_FOUND.value(),
                 String.format("No truck found by given number - %s", e.getTruckNumber())), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(DriverIsAlreadyAssignedToTruckException.class)
-    public ResponseEntity<ErrorHandler> exceptionHandler(DriverIsAlreadyAssignedToTruckException e) {
+    @ExceptionHandler(DriverIsAlreadyAssignedToThisTruckException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(DriverIsAlreadyAssignedToThisTruckException e) {
         return new ResponseEntity<>(new ErrorHandler(HttpStatus.BAD_REQUEST.value(),
                 "Driver already assigned to this truck"), HttpStatus.BAD_REQUEST);
     }
@@ -39,11 +39,11 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(DriversLicenseNumberAlreadyExistException.class)
-    public ResponseEntity<ErrorHandler> exceptionHandler(DriversLicenseNumberAlreadyExistException e) {
-        log.debug("Driver license - {} already exist in data base", e.getDriverLicense());
+    @ExceptionHandler(LicenseNumberAlreadyExistException.class)
+    public ResponseEntity<ErrorHandler> exceptionHandler(LicenseNumberAlreadyExistException e) {
+        log.debug("License - {} already exist in data base", e.getDriverLicense());
         return new ResponseEntity<>(new ErrorHandler(HttpStatus.BAD_REQUEST.value(),
-                String.format("Driver license - %s already is taken", e.getDriverLicense())),
+                String.format("License number - %s already is taken", e.getDriverLicense())),
                 HttpStatus.BAD_REQUEST);
     }
 

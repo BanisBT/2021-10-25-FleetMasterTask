@@ -1,18 +1,15 @@
 package com.tbarauskas.fleetmastertask.DTO.driver;
 
-import com.tbarauskas.fleetmastertask.DTO.truck.TruckResponseDTO;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class DriverResponseDTO {
-
-    private Long id;
+@NoArgsConstructor
+public class DriverForTruckResponseDTO {
 
     private String name;
 
     private String surname;
 
     private String driverLicense;
-
-    private TruckResponseDTO truck;
 }

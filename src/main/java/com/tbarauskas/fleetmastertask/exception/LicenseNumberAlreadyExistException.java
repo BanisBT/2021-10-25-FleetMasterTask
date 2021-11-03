@@ -3,7 +3,7 @@ package com.tbarauskas.fleetmastertask.exception;
 import lombok.Data;
 
 @Data
-public class DriversLicenseNumberAlreadyExistException extends RuntimeException{
+public class LicenseNumberAlreadyExistException extends RuntimeException{
 
     private final String driverLicense;
 }

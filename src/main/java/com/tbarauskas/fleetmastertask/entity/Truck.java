@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -32,9 +33,8 @@ public class Truck {
     @JoinColumn(name = "semi_trailer_id")
     private SemiTrailer semiTrailer;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "truck")
-    private List<Driver> drivers;
+    private List<Driver> drivers = new ArrayList<>();
 
     @CreationTimestamp
     @Column(name = "created")
@@ -44,11 +44,11 @@ public class Truck {
     @Column(name = "updated")
     private LocalDateTime updated;
 
-    public boolean isAvailableForDriver() {
-        return drivers.size() < 2;
+    public boolean isTruckWithTrailer() {
+        return semiTrailer != null;
     }
 
-    public boolean isAvailableForTrailer() {
-        return semiTrailer == null;
+    public int getDriversListSize() {
+        return drivers.size();
     }
 }

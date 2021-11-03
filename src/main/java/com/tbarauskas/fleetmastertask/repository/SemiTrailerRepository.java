@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SemiTrailerRepository extends JpaRepository<SemiTrailer, Long> {
 
     Optional<SemiTrailer> getSemiTrailerById(Long id);
+
+    Optional<SemiTrailer> getSemiTrailerByRegistrationNumberIgnoreCase(String registrationNumber);
 }
